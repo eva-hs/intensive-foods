@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
 import Favorite from "./components/Favorite";
-import "@fortawesome/fontawesome-free/css/all.css";
 
 class App extends Component {
   // Skapa state med min array. Arrayen hämtas från fakeFoodService.
@@ -16,6 +15,11 @@ class App extends Component {
   handleDelete = (_id) => {
     const foods = this.state.foods.filter((food) => food._id !== _id);
     this.setState({ foods });
+  };
+
+  handleClickStar = (id, onOff) => {
+    console.log(id);
+    console.log(onOff);
   };
 
   render() {
@@ -42,8 +46,14 @@ class App extends Component {
                 <td>{food.numberInStock}</td>
                 <td>{food.price}</td>
                 <td>
-                  {/* Skickar med variabeln onOff till komponenten favorite */}
-                  <Favorite onOff={this.state.onOff} />
+                  {/* Skickar med variabeln onOff och tabellradens ID till
+                  komponenten favorite då de ska användas för att endast ändra
+                  på en rad åt gången */}
+                  <Favorite
+                    onOff={this.state.onOff}
+                    id={food._id}
+                    onClickStar={this.handleClickStar}
+                  />
                 </td>
                 <td>
                   <button
