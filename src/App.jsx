@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
 import Favorite from "./components/Favorite";
-//import "@fortawesome/fontawesome-free/css/all.css";
 
 class App extends Component {
   // Skapa state med min array. Arrayen hämtas från fakeFoodService.
