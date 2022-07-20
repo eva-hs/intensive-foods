@@ -26,6 +26,7 @@ class Favorite extends Component {
   render() {
     return (
       <i
+        style={{ cursor: "pointer" }}
         className={this.formatStarClasses()}
         onClick={() => this.handleClick(this.state.isFavorite)}
       />
