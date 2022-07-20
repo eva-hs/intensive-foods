@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
+import Favorite from "./components/Favorite";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 class App extends Component {
   // Skapa state med min array. Arrayen hämtas från fakeFoodService.
   state = {
     foods: getFoods(),
+    // Variabel för att toggla Star-knappen.
+    onOff: true,
   };
 
   // När man trycker på knappen delete skapas en ny array som innehåller allt
@@ -39,7 +42,8 @@ class App extends Component {
                 <td>{food.numberInStock}</td>
                 <td>{food.price}</td>
                 <td>
-                  <i className="fa-solid fa-star" />
+                  {/* Skickar med variabeln onOff till komponenten favorite */}
+                  <Favorite onOff={this.state.onOff} />
                 </td>
                 <td>
                   <button
