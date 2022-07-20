@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 class App extends Component {
   // Skapa state med min array. Arrayen hämtas från fakeFoodService.
@@ -37,6 +38,9 @@ class App extends Component {
                 <td>{food.category.name}</td>
                 <td>{food.numberInStock}</td>
                 <td>{food.price}</td>
+                <td>
+                  <i className="fa-solid fa-star" />
+                </td>
                 <td>
                   <button
                     className="btn btn-danger"
