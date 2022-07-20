@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
 import Favorite from "./components/Favorite";
+//import "@fortawesome/fontawesome-free/css/all.css";
 
 class App extends Component {
   // Skapa state med min array. Arrayen hämtas från fakeFoodService.
+  // firstFoods = getFoods();
+
   state = {
     foods: getFoods(),
-    // Variabel för att toggla Star-knappen.
-    onOff: true,
   };
 
   // När man trycker på knappen delete skapas en ny array som innehåller allt
@@ -15,11 +16,6 @@ class App extends Component {
   handleDelete = (_id) => {
     const foods = this.state.foods.filter((food) => food._id !== _id);
     this.setState({ foods });
-  };
-
-  handleClickStar = (id, onOff) => {
-    console.log(id);
-    console.log(onOff);
   };
 
   render() {
@@ -49,11 +45,7 @@ class App extends Component {
                   {/* Skickar med variabeln onOff och tabellradens ID till
                   komponenten favorite då de ska användas för att endast ändra
                   på en rad åt gången */}
-                  <Favorite
-                    onOff={this.state.onOff}
-                    id={food._id}
-                    onClickStar={this.handleClickStar}
-                  />
+                  <Favorite />
                 </td>
                 <td>
                   <button
