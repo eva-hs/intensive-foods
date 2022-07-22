@@ -17,6 +17,14 @@ class App extends Component {
     this.setState({ foods });
   };
 
+  handleStarClick = (food) => {
+    const foods = [...this.state.foods];
+    const index = foods.indexOf(food);
+    foods[index] = { ...food };
+    foods[index].isFavorite = !foods[index].isFavorite;
+    this.setState({ foods });
+  };
+
   render() {
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
@@ -41,10 +49,13 @@ class App extends Component {
                 <td>{food.numberInStock}</td>
                 <td>{food.price}</td>
                 <td>
-                  {/* Skickar med variabeln onOff och tabellradens ID till
-                  komponenten favorite då de ska användas för att endast ändra
-                  på en rad åt gången */}
-                  <Favorite />
+                  {/* Skickar med variabeln food.isFavorite och tabellradens ID
+                  till komponenten favorite då de ska användas för att endast
+                  ändra på en rad åt gången */}
+                  <Favorite
+                    isFavorite={food.isFavorite}
+                    onStarClick={() => this.handleStarClick(food)}
+                  />
                 </td>
                 <td>
                   <button
