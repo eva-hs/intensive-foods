@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
-import Favorite from "./components/Favorite";
+import Favorite from "./components/common/Favorite";
 
 class App extends Component {
   state = {
