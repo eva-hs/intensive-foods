@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
+import { getCategories } from "./fakeCategoryService";
 import Favorite from "./components/common/Favorite";
 import Pagination from "./components/common/Pagination";
 import ListGroup from "./components/common/ListGroup";
@@ -12,6 +13,7 @@ class App extends Component {
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ],
+    categories: getCategories(),
   };
 
   handleDelete = (_id) => {
@@ -50,7 +52,7 @@ class App extends Component {
         <div className="container">
           <div className="row">
             <div className="col-3">
-              <ListGroup />
+              <ListGroup categories={this.state.categories} />
             </div>
             <div className="col-9">
               <span>
