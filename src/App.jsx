@@ -47,46 +47,56 @@ class App extends Component {
       <p>There are no foods in the database</p>
     ) : (
       <>
-        <ListGroup />
-        <p>Showing {this.state.foods.length} foods in the database</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Stock</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.foods.map((food) => (
-              <tr key={food._id}>
-                <td>{food.name}</td>
-                <td>{food.category.name}</td>
-                <td>{food.numberInStock}</td>
-                <td>{food.price}</td>
-                <td>
-                  <Favorite
-                    isFavorite={food.isFavorite}
-                    onStarClick={() => this.handleStarClick(food)}
-                  />
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => this.handleDelete(food._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination
-          paginationValues={this.state.paginationValues}
-          onPaginationClick={this.handlePaginationClick}
-        />
+        <div className="container">
+          <div className="row">
+            <div className="col-3">
+              <ListGroup />
+            </div>
+            <div className="col-9">
+              <span>
+                Showing {this.state.foods.length} foods in the database
+              </span>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.foods.map((food) => (
+                    <tr key={food._id}>
+                      <td>{food.name}</td>
+                      <td>{food.category.name}</td>
+                      <td>{food.numberInStock}</td>
+                      <td>{food.price}</td>
+                      <td>
+                        <Favorite
+                          isFavorite={food.isFavorite}
+                          onStarClick={() => this.handleStarClick(food)}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => this.handleDelete(food._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Pagination
+                paginationValues={this.state.paginationValues}
+                onPaginationClick={this.handlePaginationClick}
+              />
+            </div>
+          </div>
+        </div>
       </>
     );
   }
