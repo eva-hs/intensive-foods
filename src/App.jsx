@@ -8,12 +8,12 @@ import ListGroup from "./components/common/ListGroup";
 class App extends Component {
   state = {
     foods: getFoods(),
+    categories: getCategories(),
     paginationValues: [
       { _id: 0, isActive: true },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ],
-    categories: getCategories(),
     categoryValues: [
       { _id: 0, isActive: true },
       { _id: 1, isActive: false },
@@ -35,20 +35,33 @@ class App extends Component {
     this.setState({ foods });
   };
 
-  handlePaginationClick = (value) => {
+  handlePaginationClick = (index) => {
     // Create new paginationValues array to reset isActive values
     const paginationValues = [
       { _id: 0, isActive: false },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ];
-    // Find index place in old array
-    const index = this.state.paginationValues.indexOf(value);
-    // Make changes
+    // Make changes on index place we received in the function call
     paginationValues[index].isActive = true;
     // setState
     this.setState({ paginationValues });
   };
+
+  // handlePaginationClick = (value) => {
+  //   // Create new paginationValues array to reset isActive values
+  //   const paginationValues = [
+  //     { _id: 0, isActive: false },
+  //     { _id: 1, isActive: false },
+  //     { _id: 2, isActive: false },
+  //   ];
+  //   // Find index place in old array
+  //   const index = this.state.paginationValues.indexOf(value);
+  //   // Make changes
+  //   paginationValues[index].isActive = true;
+  //   // setState
+  //   this.setState({ paginationValues });
+  // };
 
   handleListGroupClick = (value) => {
     // Create new categoryValues array to reset isActive values
@@ -91,6 +104,8 @@ class App extends Component {
                     <th>Category</th>
                     <th>Stock</th>
                     <th>Price</th>
+                    <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>

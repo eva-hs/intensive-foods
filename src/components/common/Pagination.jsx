@@ -3,35 +3,20 @@ import React, { Component } from "react";
 class Pagination extends Component {
   render() {
     const { paginationValues, onPaginationClick } = this.props;
+
     return (
       <ul className="pagination">
-        <li className={this.formatPageItem(paginationValues[0].isActive)}>
-          <a
-            onClick={() => onPaginationClick(paginationValues[0])}
-            className="page-link"
-            // href="#"
-          >
-            1
-          </a>
-        </li>
-        <li className={this.formatPageItem(paginationValues[1].isActive)}>
-          <a
-            onClick={() => onPaginationClick(paginationValues[1])}
-            className="page-link"
-            // href="#"
-          >
-            2
-          </a>
-        </li>
-        <li className={this.formatPageItem(paginationValues[2].isActive)}>
-          <a
-            onClick={() => onPaginationClick(paginationValues[2])}
-            className="page-link"
-            // href="#"
-          >
-            3
-          </a>
-        </li>
+        {paginationValues.map((value, index) => (
+          <li key={value.index} className={this.formatPageItem(value.isActive)}>
+            <a
+              onClick={() => onPaginationClick(index)}
+              className="page-link"
+              // href="#"
+            >
+              {index + 1}
+            </a>
+          </li>
+        ))}
       </ul>
     );
   }
