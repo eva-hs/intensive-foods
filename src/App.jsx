@@ -15,10 +15,9 @@ class App extends Component {
       { _id: 2, isActive: false },
     ],
     categoryValues: [
-      { _id: 0, isActive: true },
+      { _id: 0, isActive: false },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
-      { _id: 3, isActive: false },
     ],
   };
 
@@ -48,32 +47,14 @@ class App extends Component {
     this.setState({ paginationValues });
   };
 
-  // handlePaginationClick = (value) => {
-  //   // Create new paginationValues array to reset isActive values
-  //   const paginationValues = [
-  //     { _id: 0, isActive: false },
-  //     { _id: 1, isActive: false },
-  //     { _id: 2, isActive: false },
-  //   ];
-  //   // Find index place in old array
-  //   const index = this.state.paginationValues.indexOf(value);
-  //   // Make changes
-  //   paginationValues[index].isActive = true;
-  //   // setState
-  //   this.setState({ paginationValues });
-  // };
-
-  handleListGroupClick = (value) => {
+  handleListGroupClick = (index) => {
     // Create new categoryValues array to reset isActive values
     const categoryValues = [
       { _id: 0, isActive: false },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
-      { _id: 3, isActive: false },
     ];
-    // Find index place in old array
-    const index = this.state.categoryValues.indexOf(value);
-    // Make changes
+    // Make changes on index place we received in the function call
     categoryValues[index].isActive = true;
     // setState
     this.setState({ categoryValues });
