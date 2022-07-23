@@ -9,7 +9,7 @@ class App extends Component {
   state = {
     foods: getFoods(),
     paginationValues: [
-      { _id: 0, isActive: false },
+      { _id: 0, isActive: true },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ],
