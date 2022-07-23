@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
 import Favorite from "./components/common/Favorite";
+import Pagination from "./components/common/Pagination";
 
 class App extends Component {
   state = {
@@ -60,6 +61,7 @@ class App extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination />
       </>
     );
   }
