@@ -9,7 +9,7 @@ class Pagination extends Component {
           <a
             onClick={() => onPaginationClick(paginationValues[0])}
             className="page-link"
-            href="#"
+            // href="#"
           >
             1
           </a>
@@ -18,7 +18,7 @@ class Pagination extends Component {
           <a
             onClick={() => onPaginationClick(paginationValues[1])}
             className="page-link"
-            href="#"
+            // href="#"
           >
             2
           </a>
@@ -27,7 +27,7 @@ class Pagination extends Component {
           <a
             onClick={() => onPaginationClick(paginationValues[2])}
             className="page-link"
-            href="#"
+            // href="#"
           >
             3
           </a>
@@ -36,7 +36,7 @@ class Pagination extends Component {
     );
   }
 
-  // Formats the pagination depending on isActives value.
+  // Formats the pagination depending on isActive value.
   formatPageItem(isActive) {
     let formatPageItem = "page-item ";
     formatPageItem += isActive ? "active" : "disable";

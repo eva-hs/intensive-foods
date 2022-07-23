@@ -27,7 +27,7 @@ class App extends Component {
   };
 
   handlePaginationClick = (value) => {
-    // create new paginationValues array
+    // Create new paginationValues array to reset isActive values
     const paginationValues = [
       { _id: 0, isActive: false },
       { _id: 1, isActive: false },
@@ -37,7 +37,7 @@ class App extends Component {
     const index = this.state.paginationValues.indexOf(value);
     // Make changes
     paginationValues[index].isActive = true;
-    //setState
+    // setState
     this.setState({ paginationValues });
   };
 
