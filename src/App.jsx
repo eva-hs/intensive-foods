@@ -14,6 +14,12 @@ class App extends Component {
       { _id: 2, isActive: false },
     ],
     categories: getCategories(),
+    categoryValues: [
+      { _id: 0, isActive: true },
+      { _id: 1, isActive: false },
+      { _id: 2, isActive: false },
+      { _id: 3, isActive: false },
+    ],
   };
 
   handleDelete = (_id) => {
@@ -51,10 +57,13 @@ class App extends Component {
       <>
         <div className="container">
           <div className="row">
-            <div className="col-3">
-              <ListGroup categories={this.state.categories} />
+            <div className="col-2">
+              <ListGroup
+                categories={this.state.categories}
+                categoryValues={this.state.categoryValues}
+              />
             </div>
-            <div className="col-9">
+            <div className="col-10">
               <span>
                 Showing {this.state.foods.length} foods in the database
               </span>
