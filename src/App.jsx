@@ -50,6 +50,22 @@ class App extends Component {
     this.setState({ paginationValues });
   };
 
+  handleListGroupClick = (value) => {
+    // Create new categoryValues array to reset isActive values
+    const categoryValues = [
+      { _id: 0, isActive: false },
+      { _id: 1, isActive: false },
+      { _id: 2, isActive: false },
+      { _id: 3, isActive: false },
+    ];
+    // Find index place in old array
+    const index = this.state.categoryValues.indexOf(value);
+    // Make changes
+    categoryValues[index].isActive = true;
+    // setState
+    this.setState({ categoryValues });
+  };
+
   render() {
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
@@ -61,6 +77,7 @@ class App extends Component {
               <ListGroup
                 categories={this.state.categories}
                 categoryValues={this.state.categoryValues}
+                onListGroupClick={this.handleListGroupClick}
               />
             </div>
             <div className="col-10">
