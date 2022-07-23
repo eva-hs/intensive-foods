@@ -6,10 +6,10 @@ import Pagination from "./components/common/Pagination";
 class App extends Component {
   state = {
     foods: getFoods(),
-    isActive: [
-      { _id: 0, active: false },
-      { _id: 1, active: false },
-      { _id: 2, active: false },
+    paginationValues: [
+      { _id: 0, isActive: false },
+      { _id: 1, isActive: false },
+      { _id: 2, isActive: false },
     ],
   };
 
@@ -26,21 +26,19 @@ class App extends Component {
     this.setState({ foods });
   };
 
-  handlePaginationClick = (a) => {
-    // create new isActive array
-    const isActive = [
-      { _id: 0, active: false },
-      { _id: 1, active: false },
-      { _id: 2, active: false },
+  handlePaginationClick = (value) => {
+    // create new paginationValues array
+    const paginationValues = [
+      { _id: 0, isActive: false },
+      { _id: 1, isActive: false },
+      { _id: 2, isActive: false },
     ];
     // Find index place in old array
-    const index = this.state.isActive.indexOf(a);
-    // clone the object on the index place
-    isActive[index] = { ...a };
+    const index = this.state.paginationValues.indexOf(value);
     // Make changes
-    isActive[index].active = true;
+    paginationValues[index].isActive = true;
     //setState
-    this.setState({ isActive });
+    this.setState({ paginationValues });
   };
 
   render() {
@@ -84,7 +82,7 @@ class App extends Component {
           </tbody>
         </table>
         <Pagination
-          isActive={this.state.isActive}
+          paginationValues={this.state.paginationValues}
           onPaginationClick={this.handlePaginationClick}
         />
       </>

@@ -2,31 +2,30 @@ import React, { Component } from "react";
 
 class Pagination extends Component {
   render() {
-    const { isActive, onPaginationClick } = this.props;
-
+    const { paginationValues, onPaginationClick } = this.props;
     return (
       <ul className="pagination">
-        <li className={this.formatPageItem(isActive[0].active)}>
+        <li className={this.formatPageItem(paginationValues[0].isActive)}>
           <a
-            onClick={() => onPaginationClick(isActive[0])}
+            onClick={() => onPaginationClick(paginationValues[0])}
             className="page-link"
             href="#"
           >
             1
           </a>
         </li>
-        <li className={this.formatPageItem(isActive[1].active)}>
+        <li className={this.formatPageItem(paginationValues[1].isActive)}>
           <a
-            onClick={() => onPaginationClick(isActive[1])}
+            onClick={() => onPaginationClick(paginationValues[1])}
             className="page-link"
             href="#"
           >
             2
           </a>
         </li>
-        <li className={this.formatPageItem(isActive[2].active)}>
+        <li className={this.formatPageItem(paginationValues[2].isActive)}>
           <a
-            onClick={() => onPaginationClick(isActive[2])}
+            onClick={() => onPaginationClick(paginationValues[2])}
             className="page-link"
             href="#"
           >
@@ -40,7 +39,7 @@ class Pagination extends Component {
   // Formats the pagination depending on isActives value.
   formatPageItem(isActive) {
     let formatPageItem = "page-item ";
-    formatPageItem += isActive === true ? "active" : "disable";
+    formatPageItem += isActive ? "active" : "disable";
     return formatPageItem;
   }
 }
