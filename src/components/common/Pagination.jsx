@@ -7,7 +7,7 @@ class Pagination extends Component {
     return (
       <ul className="pagination">
         {paginationValues.map((value, index) => (
-          <li key={value.index} className={this.formatPageItem(value.isActive)}>
+          <li key={index} className={this.formatPageItem(value.isActive)}>
             <a
               onClick={() => onPaginationClick(index)}
               className="page-link"
