@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getFoods } from "./fakeFoodService";
 import Favorite from "./components/common/Favorite";
 import Pagination from "./components/common/Pagination";
+import ListGroup from "./components/common/ListGroup";
 
 class App extends Component {
   state = {
@@ -46,6 +47,7 @@ class App extends Component {
       <p>There are no foods in the database</p>
     ) : (
       <>
+        <ListGroup />
         <p>Showing {this.state.foods.length} foods in the database</p>
         <table className="table">
           <thead>
