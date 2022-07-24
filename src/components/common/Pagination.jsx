@@ -13,7 +13,7 @@ class Pagination extends Component {
               className="page-link"
               // href="#"
             >
-              {index + 1}
+              {value._id}
             </a>
           </li>
         ))}

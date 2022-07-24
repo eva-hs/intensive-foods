@@ -26,7 +26,7 @@ class ListGroup extends Component {
             onClick={() => onListGroupClick(index)}
             className={this.formatCategoryItem(value.isActive)}
           >
-            Test
+            {categories[index].name}
           </li>
         ))}
       </ul>
