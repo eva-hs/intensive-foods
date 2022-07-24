@@ -57,8 +57,6 @@ class App extends Component {
     ];
     const allCategoryValue = { _id: 3, isActive: false };
     // Make changes on index place we received in the function call
-    //const value =
-
     index === 3
       ? (allCategoryValue.isActive = true)
       : (categoryValues[index].isActive = true);
