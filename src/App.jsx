@@ -19,7 +19,7 @@ class App extends Component {
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ],
-    allCategoryValue: { _id: 3, isActive: true },
+    allCategoryValue: { _id: "a", isActive: true },
   };
 
   handleDelete = (_id) => {
@@ -55,9 +55,13 @@ class App extends Component {
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
     ];
-    const allCategoryValue = { _id: 3, isActive: false };
+    // const allCategoryValue = { _id: "a", isActive: false };
+    const allCategoryValue = {
+      ...this.state.allCategoryValue,
+      isActive: false,
+    };
     // Make changes on index place we received in the function call
-    index === 3
+    index === "a"
       ? (allCategoryValue.isActive = true)
       : (categoryValues[index].isActive = true);
     // setState
