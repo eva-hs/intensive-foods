@@ -2,23 +2,28 @@ import React, { Component } from "react";
 
 class ListGroup extends Component {
   render() {
-    // Kolla upp i morgon: Jag har tagit bort all category från arrayn eftersom den annars mappar 4 gånger
+    // Kolla upp i morgon:
+    // 1. Jag har tagit bort all category från arrayn eftersom den annars
+    // mappar 4 gånger. Hur ska jag då göra med första formatering och onClick?
+    // 2. Jag får inte rätt på categories[index].name
 
-    const { categories, categoryValues, onListGroupClick } = this.props;
+    const { categories, categoryValues, allCategoryValue, onListGroupClick } =
+      this.props;
 
     console.log(categories[0].name);
     return (
       <ul className="list-group">
         <li
-          onClick={() => onListGroupClick(categoryValues[0])}
-          className={this.formatCategoryItem(true)}
+          key={allCategoryValue._id}
+          onClick={() => onListGroupClick(allCategoryValue._id)}
+          className={this.formatCategoryItem(allCategoryValue.isActive)}
         >
           All categories
         </li>
         {categoryValues.map((value, index) => (
           <li
-            key={index + 1}
-            onClick={() => onListGroupClick(index + 1)}
+            key={value._id}
+            onClick={() => onListGroupClick(index)}
             className={this.formatCategoryItem(value.isActive)}
           >
             Test
