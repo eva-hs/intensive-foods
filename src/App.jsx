@@ -15,11 +15,11 @@ class App extends Component {
       { _id: 2, isActive: false },
     ],
     categoryValues: [
+      { _id: 0, isActive: false },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
-      { _id: 3, isActive: false },
     ],
-    allCategoryValue: { _id: 0, isActive: true },
+    allCategoryValue: { _id: 3, isActive: true },
   };
 
   handleDelete = (_id) => {
@@ -49,16 +49,21 @@ class App extends Component {
   };
 
   handleListGroupClick = (index) => {
-    // Create new categoryValues array to reset isActive values
+    // Create new categoryValues array and allCategory object to reset isActive values
     const categoryValues = [
+      { _id: 0, isActive: false },
       { _id: 1, isActive: false },
       { _id: 2, isActive: false },
-      { _id: 3, isActive: false },
     ];
-    const allCategoryValue = { _id: 0, isActive: false };
+    const allCategoryValue = { _id: 3, isActive: false };
     // Make changes on index place we received in the function call
-    allCategoryValue.isActive = false;
-    categoryValues[index].isActive = true;
+    //const value =
+    console.log(index);
+    index === 3
+      ? (allCategoryValue.isActive = true)
+      : (categoryValues[index].isActive = true);
+    console.log(allCategoryValue);
+    console.log(categoryValues);
     // setState
     this.setState({ categoryValues, allCategoryValue });
   };
