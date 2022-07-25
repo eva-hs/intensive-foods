@@ -1,3 +1,4 @@
+import { isValidDateValue } from "@testing-library/user-event/dist/utils";
 import React, { Component } from "react";
 
 class Pagination extends Component {
@@ -7,7 +8,7 @@ class Pagination extends Component {
     return (
       <ul className="pagination">
         {paginationValues.map((value, index) => (
-          <li key={index} className={this.formatPageItem(value.isActive)}>
+          <li key={value._id} className={this.formatPageItem(value.isActive)}>
             <a
               onClick={() => onPaginationClick(index)}
               className="page-link"

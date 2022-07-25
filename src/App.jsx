@@ -49,11 +49,6 @@ class App extends Component {
 
   handleListGroupClick = (index) => {
     // Create new categoryValues array and allCategory object to reset isActive values
-    // const categoryValues = [
-    //   { _id: 0, isActive: false },
-    //   { _id: 1, isActive: false },
-    //   { _id: 2, isActive: false },
-    // ];
     const categoryValues = this.state.categoryValues.map((value) => ({
       ...value,
       isActive: false,
