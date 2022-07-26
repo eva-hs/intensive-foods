@@ -1,33 +1,34 @@
-import { isValidDateValue } from "@testing-library/user-event/dist/utils";
-import React, { Component } from "react";
+import React from "react";
 
-class Pagination extends Component {
-  render() {
-    const { paginationValues, onPaginationClick } = this.props;
+function Pagination({ itemCount, pageSize, selectedPage, onPageChange }) {
+  const pageCount = Math.ceil(itemCount / pageSize);
 
-    return (
-      <ul className="pagination">
-        {paginationValues.map((value, index) => (
-          <li key={value._id} className={this.formatPageItem(value.isActive)}>
-            <a
-              onClick={() => onPaginationClick(index)}
-              className="page-link"
-              // href="#"
-            >
-              {value._id + 1}
-            </a>
-          </li>
-        ))}
-      </ul>
-    );
-  }
+  if (pageCount === 1) return null;
 
-  // Formats the pagination depending on isActive value.
-  formatPageItem(isActive) {
-    let formatPageItem = "page-item ";
-    formatPageItem += isActive ? "active" : "disable";
-    return formatPageItem;
-  }
+  const pages = range(1, pageCount);
+
+  console.log(selectedPage);
+
+  return (
+    <ul className="pagination">
+      {pages.map((page) => (
+        <li
+          key={page}
+          className={page === selectedPage ? "page-item active" : "page-item"}
+        >
+          <button onClick={() => onPageChange(page)} className="page-link">
+            {page}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default Pagination;
+
+function range(start, end) {
+  let result = [];
+  for (let i = start; i <= end; i++) result.push(i);
+  return result;
+}

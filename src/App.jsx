@@ -9,11 +9,8 @@ class App extends Component {
   state = {
     foods: getFoods(),
     categories: getCategories(),
-    paginationValues: [
-      { _id: 0, isActive: true },
-      { _id: 1, isActive: false },
-      { _id: 2, isActive: false },
-    ],
+    pageSize: 4,
+    selectedPage: 1,
     categoryValues: [
       { _id: 0, isActive: false },
       { _id: 1, isActive: false },
@@ -35,20 +32,11 @@ class App extends Component {
     this.setState({ foods });
   };
 
-  handlePaginationClick = (index) => {
-    // Clone paginationValues array to reset isActive values
-    const paginationValues = this.state.paginationValues.map((value) => ({
-      ...value,
-      isActive: false,
-    }));
-    // Make changes on index place we received in the function call
-    paginationValues[index].isActive = true;
-    // setState
-    this.setState({ paginationValues });
-  };
+  handlePageChange = (page) => this.setState({ selectedPage: page });
 
   handleListGroupClick = (index) => {
     // Create new categoryValues array and allCategory object to reset isActive values
+
     const categoryValues = this.state.categoryValues.map((value) => ({
       ...value,
       isActive: false,
@@ -67,6 +55,9 @@ class App extends Component {
   };
 
   render() {
+    const { length: count } = this.state.foods;
+    const { pageSize, selectedPage } = this.state;
+
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
     ) : (
@@ -82,9 +73,7 @@ class App extends Component {
               />
             </div>
             <div className="col-10">
-              <span>
-                Showing {this.state.foods.length} foods in the database
-              </span>
+              <span>Showing {count} foods in the database</span>
               <table className="table">
                 <thead>
                   <tr>
@@ -122,8 +111,10 @@ class App extends Component {
                 </tbody>
               </table>
               <Pagination
-                paginationValues={this.state.paginationValues}
-                onPaginationClick={this.handlePaginationClick}
+                itemCount={count}
+                pageSize={pageSize}
+                selectedPage={selectedPage}
+                onPageChange={this.handlePageChange}
               />
             </div>
           </div>
