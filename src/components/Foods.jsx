@@ -5,19 +5,21 @@ import Favorite from "./common/Favorite";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 
+const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
+
 class Foods extends Component {
   state = {
-    foods: getFoods(),
-    categories: getCategories(),
+    foods: [],
+    categories: [],
     pageSize: 4,
     selectedPage: 1,
-    categoryValues: [
-      { _id: 0, isActive: false },
-      { _id: 1, isActive: false },
-      { _id: 2, isActive: false },
-    ],
-    allCategoryValue: { _id: "a", isActive: true },
+    selectedCategori: DEFAULT_CATEGORY,
   };
+
+  componentDidMount() {
+    const categories = [DEFAULT_CATEGORY, ...getCategories()];
+    this.setState({ foods: getFoods(), categories });
+  }
 
   handleDelete = (_id) => {
     const foods = this.state.foods.filter((food) => food._id !== _id);
@@ -34,41 +36,23 @@ class Foods extends Component {
 
   handlePageChange = (page) => this.setState({ selectedPage: page });
 
-  handleListGroupClick = (index) => {
-    // Create new categoryValues array and allCategory object to reset isActive values
-
-    const categoryValues = this.state.categoryValues.map((value) => ({
-      ...value,
-      isActive: false,
-    }));
-    // const allCategoryValue = { _id: "a", isActive: false };
-    const allCategoryValue = {
-      ...this.state.allCategoryValue,
-      isActive: false,
-    };
-    // Make changes on index place we received in the function call
-    index === "a"
-      ? (allCategoryValue.isActive = true)
-      : (categoryValues[index].isActive = true);
-    // setState
-    this.setState({ categoryValues, allCategoryValue });
-  };
+  handleListGroupClick = (category) =>
+    this.setState({ selectedCategori: category });
 
   render() {
     const { length: count } = this.state.foods;
-    const { pageSize, selectedPage } = this.state;
+    const { pageSize, selectedPage, selectedCategori } = this.state;
 
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
     ) : (
       <>
-        <div className="container">
+        <div className="container mt-4">
           <div className="row">
             <div className="col-2">
               <ListGroup
-                categories={this.state.categories}
-                categoryValues={this.state.categoryValues}
-                allCategoryValue={this.state.allCategoryValue}
+                items={this.state.categories}
+                selectedItem={selectedCategori}
                 onListGroupClick={this.handleListGroupClick}
               />
             </div>

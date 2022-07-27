@@ -3,7 +3,6 @@ import _ from "lodash";
 
 function Pagination({ itemCount, pageSize, selectedPage, onPageChange }) {
   const pageCount = Math.ceil(itemCount / pageSize);
-  console.log(pageCount);
 
   if (pageCount === 1) return null;
 

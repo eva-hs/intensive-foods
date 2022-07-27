@@ -1,38 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ListGroup extends Component {
-  render() {
-    const { categories, categoryValues, allCategoryValue, onListGroupClick } =
-      this.props;
-
-    return (
-      <ul className="list-group">
+function ListGroup({ items, selectedItem, onListGroupClick }) {
+  return (
+    <ul className="list-group">
+      {items.map((item) => (
         <li
-          key={allCategoryValue._id}
-          onClick={() => onListGroupClick(allCategoryValue._id)}
-          className={this.formatCategoryItem(allCategoryValue.isActive)}
+          key={item._id}
+          style={{ cursor: "pointer" }}
+          className={
+            item === selectedItem ? "list-group-item active" : "list-group-item"
+          }
+          onClick={() => onListGroupClick(item)}
         >
-          All categories
+          {item.name}
         </li>
-        {categoryValues.map((value, index) => (
-          <li
-            key={value._id}
-            onClick={() => onListGroupClick(index)}
-            className={this.formatCategoryItem(value.isActive)}
-          >
-            {categories[index].name}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  // Formats the pagination depending on isActive value.
-  formatCategoryItem(isActive) {
-    let formatCategoryItem = "list-group-item ";
-    formatCategoryItem += isActive ? "active" : "";
-    return formatCategoryItem;
-  }
+      ))}
+    </ul>
+  );
 }
 
 export default ListGroup;
