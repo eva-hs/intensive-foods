@@ -29,9 +29,11 @@ class Foods extends Component {
   }
 
   handleDelete = (food) => {
-    // Deletes the item you click on + bug fixer - In filtered category.
+    // Deletes the item you click on
+    //+ bug fixer - In filtered category and allCategories
     // If all items in one category were deleted, it showed an emty page.
     const foods = this.state.foods.filter((f) => f._id !== food._id);
+    // Fixes bug when you have chosen a category and deletes all the items.
     if (this.state.selectedCategori._id) {
       foods.filter(
         (food) => food.category._id === this.state.selectedCategori._id
@@ -42,23 +44,13 @@ class Foods extends Component {
             selectedCategori: DEFAULT_CATEGORY,
           })
         : this.setState({ foods });
-    } else if (
+    } // fixes bug in allcategories when you delete the last item in a page.
+    else if (
       foods.length <=
       (this.state.selectedPage - 1) * this.state.pageSize
     ) {
-      console.log("nu är foods.length kortare än vald sida * sidlängd");
-      console.log("foods.length: " + foods.length);
-      console.log(
-        "vald sida -1 * sidlängd: " +
-          (this.state.selectedPage - 1) * this.state.pageSize
-      );
       this.setState({ foods, selectedPage: this.state.selectedPage - 1 });
     } else {
-      console.log("Nu ska vi bara uppdatera foodstabellen");
-      console.log("foods.length: " + foods.length);
-      console.log(
-        "vald sida * sidlängd: " + this.state.selectedPage * this.state.pageSize
-      );
       this.setState({ foods });
     }
   };
