@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { getFoods } from "../fakeFoodService";
 import { getCategories } from "../fakeCategoryService";
-import Favorite from "./common/Favorite";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import { paginate } from "../utils/paginate";
+import FoodsTable from "./FoodsTable";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
+
+// Bugs
+// In allCategories. If all items in one page are deleted. It shows an emty page.
 
 class Foods extends Component {
   state = {
@@ -22,8 +25,20 @@ class Foods extends Component {
     this.setState({ foods: getFoods(), categories });
   }
 
-  handleDelete = (_id) => {
-    const foods = this.state.foods.filter((food) => food._id !== _id);
+  handleDelete = (food) => {
+    // Deletes the item you click on + bug fixer - In filtered category.
+    // If all items were deleted, it showed an emty page.
+    const foods = this.state.foods.filter((f) => f._id !== food._id);
+    // foods.filter(
+    //   (food) => food.category._id === this.state.selectedCategori._id
+    // ).length === 0
+    //   ? console.log(
+    //       this.setState({
+    //         foods,
+    //         selectedPage: 1,
+    //         selectedCategori: DEFAULT_CATEGORY,
+    //       })
+    //     ) :
     this.setState({ foods });
   };
 
@@ -38,7 +53,20 @@ class Foods extends Component {
   handlePageChange = (page) => this.setState({ selectedPage: page });
 
   handleListGroupClick = (category) =>
-    this.setState({ selectedCategori: category });
+    this.setState({ selectedCategori: category, selectedPage: 1 });
+
+  // filterFoods = (allFoods, selectedCategoriId) => {
+  //   const filteredFoods = selectedCategoriId
+  //     ? allFoods.filter((f) => f.category._id === selectedCategoriId)
+  //     : allFoods;
+
+  // Bug fixer - In filtered category.
+  // If all items were deleted, it showed an emty page.
+  // filteredFoods.length === 0 &&
+  //   this.setState({ selectedPage: 1, selectedCategori: DEFAULT_CATEGORY });
+
+  //   return filteredFoods;
+  // };
 
   render() {
     const { length: count } = this.state.foods;
@@ -53,6 +81,11 @@ class Foods extends Component {
     const filteredFoods = selectedCategori._id
       ? allFoods.filter((f) => f.category._id === selectedCategori._id)
       : allFoods;
+
+    // Bug fixer - In filtered category.
+    // If all items were deleted, it showed an emty page.
+    // filteredFoods.length === 0 &&
+    //   this.setState({ selectedPage: 1, selectedCategori: DEFAULT_CATEGORY });
 
     const foods = paginate(filteredFoods, selectedPage, pageSize);
 
@@ -71,42 +104,11 @@ class Foods extends Component {
             </div>
             <div className="col-10">
               <span>Showing {filteredFoods.length} foods in the database</span>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Stock</th>
-                    <th>Price</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {foods.map((food) => (
-                    <tr key={food._id}>
-                      <td>{food.name}</td>
-                      <td>{food.category.name}</td>
-                      <td>{food.numberInStock}</td>
-                      <td>{food.price}</td>
-                      <td>
-                        <Favorite
-                          isFavorite={food.isFavorite}
-                          onStarClick={() => this.handleStarClick(food)}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => this.handleDelete(food._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <FoodsTable
+                foods={foods}
+                onStarClick={this.handleStarClick}
+                onDelete={this.handleDelete}
+              />
               <Pagination
                 itemCount={filteredFoods.length}
                 pageSize={pageSize}
