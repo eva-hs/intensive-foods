@@ -42,7 +42,25 @@ class Foods extends Component {
             selectedCategori: DEFAULT_CATEGORY,
           })
         : this.setState({ foods });
-    } else this.setState({ foods });
+    } else if (
+      foods.length <=
+      (this.state.selectedPage - 1) * this.state.pageSize
+    ) {
+      console.log("nu är foods.length kortare än vald sida * sidlängd");
+      console.log("foods.length: " + foods.length);
+      console.log(
+        "vald sida -1 * sidlängd: " +
+          (this.state.selectedPage - 1) * this.state.pageSize
+      );
+      this.setState({ foods, selectedPage: this.state.selectedPage - 1 });
+    } else {
+      console.log("Nu ska vi bara uppdatera foodstabellen");
+      console.log("foods.length: " + foods.length);
+      console.log(
+        "vald sida * sidlängd: " + this.state.selectedPage * this.state.pageSize
+      );
+      this.setState({ foods });
+    }
   };
 
   handleSort = (path) => {
