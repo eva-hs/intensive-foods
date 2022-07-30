@@ -4,6 +4,7 @@ import { getCategories } from "../fakeCategoryService";
 import Favorite from "./common/Favorite";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
+import { paginate } from "../utils/paginate";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
 
@@ -41,7 +42,15 @@ class Foods extends Component {
 
   render() {
     const { length: count } = this.state.foods;
-    const { pageSize, selectedPage, selectedCategori } = this.state;
+    const {
+      pageSize,
+      selectedPage,
+      selectedCategori,
+      categories,
+      foods: allFoods,
+    } = this.state;
+
+    const foods = paginate(allFoods, selectedPage, pageSize);
 
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
@@ -51,7 +60,7 @@ class Foods extends Component {
           <div className="row">
             <div className="col-2">
               <ListGroup
-                items={this.state.categories}
+                items={categories}
                 selectedItem={selectedCategori}
                 onListGroupClick={this.handleListGroupClick}
               />
@@ -70,7 +79,7 @@ class Foods extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.foods.map((food) => (
+                  {foods.map((food) => (
                     <tr key={food._id}>
                       <td>{food.name}</td>
                       <td>{food.category.name}</td>
