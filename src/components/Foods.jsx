@@ -50,7 +50,11 @@ class Foods extends Component {
       foods: allFoods,
     } = this.state;
 
-    const foods = paginate(allFoods, selectedPage, pageSize);
+    const filteredFoods = selectedCategori._id
+      ? allFoods.filter((f) => f.category._id === selectedCategori._id)
+      : allFoods;
+
+    const foods = paginate(filteredFoods, selectedPage, pageSize);
 
     return this.state.foods.length === 0 ? (
       <p>There are no foods in the database</p>
@@ -66,7 +70,7 @@ class Foods extends Component {
               />
             </div>
             <div className="col-10">
-              <span>Showing {count} foods in the database</span>
+              <span>Showing {filteredFoods.length} foods in the database</span>
               <table className="table">
                 <thead>
                   <tr>
@@ -104,7 +108,7 @@ class Foods extends Component {
                 </tbody>
               </table>
               <Pagination
-                itemCount={count}
+                itemCount={filteredFoods.length}
                 pageSize={pageSize}
                 selectedPage={selectedPage}
                 onPageChange={this.handlePageChange}
