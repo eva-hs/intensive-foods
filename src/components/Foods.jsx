@@ -20,7 +20,7 @@ class Foods extends Component {
     pageSize: 4,
     selectedPage: 1,
     selectedCategori: DEFAULT_CATEGORY,
-    SortColumn: { path: "name", order: "asc" },
+    sortColumn: { path: "name", order: "asc" },
   };
 
   componentDidMount() {
@@ -55,17 +55,7 @@ class Foods extends Component {
     }
   };
 
-  handleSort = (path) => {
-    const SortColumn = { ...this.state.SortColumn };
-    if (SortColumn.path === path) {
-      SortColumn.order = SortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      SortColumn.path = path;
-      SortColumn.order = "asc";
-    }
-
-    this.setState({ SortColumn });
-  };
+  handleSort = (sortColumn) => this.setState({ sortColumn });
 
   handleStarClick = (food) => {
     const foods = [...this.state.foods];
@@ -88,7 +78,7 @@ class Foods extends Component {
       selectedCategori,
       categories,
       foods: allFoods,
-      SortColumn,
+      sortColumn,
     } = this.state;
 
     // 1. Filter
@@ -99,8 +89,8 @@ class Foods extends Component {
     // 2. Sort
     const sortedFoods = _.orderBy(
       filteredFoods,
-      [SortColumn.path],
-      [SortColumn.order]
+      [sortColumn.path],
+      [sortColumn.order]
     );
 
     // 3. Pagination
@@ -126,6 +116,7 @@ class Foods extends Component {
                 onStarClick={this.handleStarClick}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
+                sortColumn={sortColumn}
               />
               <Pagination
                 itemCount={filteredFoods.length}
