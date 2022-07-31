@@ -70,17 +70,14 @@ class Foods extends Component {
   handleListGroupClick = (category) =>
     this.setState({ selectedCategori: category, selectedPage: 1 });
 
-  render() {
-    const { length: count } = this.state.foods;
+  getPaginatedFoods() {
     const {
       pageSize,
       selectedPage,
       selectedCategori,
-      categories,
       foods: allFoods,
       sortColumn,
     } = this.state;
-
     // 1. Filter
     const filteredFoods = selectedCategori._id
       ? allFoods.filter((f) => f.category._id === selectedCategori._id)
@@ -96,7 +93,24 @@ class Foods extends Component {
     // 3. Pagination
     const foods = paginate(sortedFoods, selectedPage, pageSize);
 
-    return this.state.foods.length === 0 ? (
+    return { foods, FilteredCount: filteredFoods.length };
+  }
+
+  render() {
+    const {
+      pageSize,
+      selectedPage,
+      selectedCategori,
+      categories,
+      foods: allFoods,
+      sortColumn,
+    } = this.state;
+
+    const { length: count } = this.state.foods;
+
+    const { foods, FilteredCount } = this.getPaginatedFoods();
+
+    return count === 0 ? (
       <p>There are no foods in the database</p>
     ) : (
       <>
@@ -110,7 +124,7 @@ class Foods extends Component {
               />
             </div>
             <div className="col-10">
-              <span>Showing {filteredFoods.length} foods in the database</span>
+              <span>Showing {FilteredCount} foods in the database</span>
               <FoodsTable
                 foods={foods}
                 onStarClick={this.handleStarClick}
@@ -119,7 +133,7 @@ class Foods extends Component {
                 sortColumn={sortColumn}
               />
               <Pagination
-                itemCount={filteredFoods.length}
+                itemCount={FilteredCount}
                 pageSize={pageSize}
                 selectedPage={selectedPage}
                 onPageChange={this.handlePageChange}
