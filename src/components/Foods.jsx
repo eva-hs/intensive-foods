@@ -97,14 +97,8 @@ class Foods extends Component {
   }
 
   render() {
-    const {
-      pageSize,
-      selectedPage,
-      selectedCategori,
-      categories,
-      foods: allFoods,
-      sortColumn,
-    } = this.state;
+    const { pageSize, selectedPage, selectedCategori, categories, sortColumn } =
+      this.state;
 
     const { length: count } = this.state.foods;
 
