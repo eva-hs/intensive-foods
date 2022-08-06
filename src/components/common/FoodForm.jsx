@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 
 class FoodForm extends Component {
   handleSave = () => {
-    this.props.history.push("/foods");
+    this.props.history.push("/intensive-foods/foods");
   };
 
   render() {

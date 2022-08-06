@@ -16,7 +16,7 @@ class TableBody extends Component {
             {columns.map((column) =>
               column.path === "name" ? (
                 <td key={column.path || column.key}>
-                  <Link to={`/foods/${item._id}`}>
+                  <Link to={`/intensive-foods/foods/${item._id}`}>
                     {this.renderCell(item, column)}
                   </Link>
                 </td>
