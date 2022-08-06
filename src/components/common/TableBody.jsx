@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class TableBody extends Component {
@@ -12,11 +13,19 @@ class TableBody extends Component {
       <tbody>
         {data.map((item) => (
           <tr key={item._id}>
-            {columns.map((column) => (
-              <td key={column.path || column.key}>
-                {this.renderCell(item, column)}
-              </td>
-            ))}
+            {columns.map((column) =>
+              column.path === "name" ? (
+                <td key={column.path || column.key}>
+                  <Link to={`/foods/${item._id}`}>
+                    {this.renderCell(item, column)}
+                  </Link>
+                </td>
+              ) : (
+                <td key={column.path || column.key}>
+                  {this.renderCell(item, column)}
+                </td>
+              )
+            )}
           </tr>
         ))}
       </tbody>
