@@ -5,6 +5,7 @@ import Customers from "./components/Customers";
 import Orders from "./components/Orders";
 import Foods from "./components/Foods";
 import FoodForm from "./components/common/FoodForm";
+import LoginForm from "./components/LoginForm";
 import NotFound from "./components/NotFound";
 
 // Bugs: you will never get the not-found component if you in /foods/...
@@ -21,6 +22,7 @@ class App extends Component {
         <NavBar />;
         <Switch>
           <Route path="/intensive-foods/foods/:id" component={FoodForm} />
+          <Route path="/intensive-foods/login" component={LoginForm} />
           <Route path="/intensive-foods/foods" component={Foods} />
           <Route path="/intensive-foods/customers" component={Customers} />
           <Route path="/intensive-foods/orders" component={Orders} />
