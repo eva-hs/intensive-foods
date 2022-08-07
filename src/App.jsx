@@ -20,16 +20,16 @@ class App extends Component {
     return (
       <>
         <NavBar />;
-        <Redirect from="/intensive-foods/" to="/foods" />
+        <Redirect from="/intensive-foods/" to="/intensive-foods/foods" />
         <Switch>
-          <Route path="/foods/:id" component={FoodForm} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/foods" component={Foods} />
-          <Route path="/customers" component={Customers} />
-          <Route path="/orders" component={Orders} />
-          <Route path="/not-found" component={NotFound} />
+          <Route path="/intensive-foods/foods/:id" component={FoodForm} />
+          <Route path="/intensive-foods/login" component={LoginForm} />
+          <Route path="/intensive-foods/foods" component={Foods} />
+          <Route path="/intensive-foods/customers" component={Customers} />
+          <Route path="/intensive-foods/orders" component={Orders} />
+          <Route path="/intensive-foods/not-found" component={NotFound} />
           <Route exact path="/intensive-foods/" component={Foods} />
-          <Redirect to="/not-found" />
+          <Redirect to="/intensive-foods/not-found" />
         </Switch>
       </>
     );
