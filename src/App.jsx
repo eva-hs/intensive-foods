@@ -4,7 +4,7 @@ import NavBar from "./components/common/NavBar";
 import Customers from "./components/Customers";
 import Orders from "./components/Orders";
 import Foods from "./components/Foods";
-import FoodForm from "./components/common/FoodForm";
+import FoodForm from "./components/FoodForm";
 import LoginForm from "./components/LoginForm";
 import NotFound from "./components/NotFound";
 

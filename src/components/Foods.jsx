@@ -24,13 +24,8 @@ class Foods extends Component {
   };
 
   componentDidMount() {
-    console.log("Component did mount");
     const categories = [DEFAULT_CATEGORY, ...getCategories()];
     this.setState({ foods: getFoods(), categories });
-  }
-
-  componentWillUnmount() {
-    console.log("Component unmounted");
   }
 
   handleDelete = (food) => {
