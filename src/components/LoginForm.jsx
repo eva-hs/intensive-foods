@@ -1,80 +1,37 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi";
-import Input from "./common/Input";
+import Form from "./common/Form";
 
-class LoginForm extends Component {
+// Ärver från Form.jsx.
+// Nytt formulär behöver state med data och errors, Joi-schema och doSubmit.
+// Kan sedan använda renderInput och renderButton från Form.
+// Ärver även från Component genom föräldrarkomponenten Form
+class LoginForm extends Form {
   state = {
-    account: { username: "", password: "" },
+    data: { username: "", password: "" },
     errors: {
       username: "",
       password: "",
     },
   };
 
+  // Installerat biblioteket Joi. Sätter reglerna för mina inputfält.
   schema = Joi.object({
     username: Joi.string().required().min(2).label("Username"),
     password: Joi.string().required().min(4).label("Password"),
   });
-  validate() {
-    const options = { abortEarly: false };
-    const { error } = this.schema.validate(this.state.account, options);
 
-    if (!error) return null;
-
-    const errors = {};
-    for (const detail of error.details)
-      errors[detail.context.key] = detail.message;
-    return errors;
-  }
-
-  validateProperty({ name, value }) {
-    const subSchema = this.schema.extract(name);
-    const { error } = subSchema.validate(value);
-
-    if (!error) return null;
-
-    return error.message;
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = this.validate();
-    this.setState({ errors: errors || {} });
-    console.log("Loggar in");
+  // Vad ska hända när man tycker på knappen?
+  doSubmit = () => {
+    console.log("Logga in");
   };
-
-  handleChange = ({ target: input }) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(input);
-    if (errorMessage) errors[input.name] = errorMessage;
-    else delete errors[input.name];
-
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-    this.setState({ account, errors });
-  };
-
   render() {
-    const { account, errors } = this.state;
+    console.log(this.state.errors);
     return (
       <form className="m-3" onSubmit={this.handleSubmit}>
-        <Input
-          name="username"
-          label="Username"
-          value={account.username}
-          error={errors.username}
-          onChange={this.handleChange}
-        />
-        <Input
-          name="password"
-          label="Password"
-          value={account.password}
-          error={errors.password}
-          onChange={this.handleChange}
-        />
-
-        <button className="btn btn-primary">Logga in</button>
+        {this.renderInput("username", "Username")}
+        {this.renderInput("password", "Password")}
+        {this.renderButton("Logga in")}
       </form>
     );
   }
