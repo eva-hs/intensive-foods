@@ -26,12 +26,12 @@ class LoginForm extends Form {
     console.log("Logga in");
   };
   render() {
-    console.log(this.state.errors);
     return (
       <form className="m-3" onSubmit={this.handleSubmit}>
+        <h1>Log in</h1>
         {this.renderInput("username", "Username")}
         {this.renderInput("password", "Password")}
-        {this.renderButton("Logga in")}
+        {this.renderButton("Log in")}
       </form>
     );
   }

@@ -24,6 +24,16 @@ function NavBar() {
               Orders
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/intensive-foods/login">
+              Login
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/intensive-foods/register">
+              Register
+            </NavLink>
+          </li>
         </ul>
       </div>
     </nav>

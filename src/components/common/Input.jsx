@@ -7,6 +7,7 @@ function Input({ name, label, value, onChange, error }) {
         {label}
       </label>
       <input
+        type={name === "password" ? "password" : ""}
         onChange={onChange}
         value={value}
         className="form-control"

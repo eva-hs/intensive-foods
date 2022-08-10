@@ -80,6 +80,7 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Input
+        type={name}
         name={name}
         label={label}
         value={data[name]}
