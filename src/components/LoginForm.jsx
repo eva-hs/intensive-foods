@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import Joi from "joi";
 import Input from "./common/Input";
-import _ from "lodash";
 
 class LoginForm extends Component {
   state = {
@@ -11,32 +11,48 @@ class LoginForm extends Component {
     },
   };
 
+  schema = Joi.object({
+    username: Joi.string().required().min(2).label("Username"),
+    password: Joi.string().required().min(4).label("Password"),
+  });
   validate() {
-    const { username, password } = this.state.account;
+    const options = { abortEarly: false };
+    const { error } = this.schema.validate(this.state.account, options);
+
+    if (!error) return null;
+
     const errors = {};
-    if (username === "") {
-      errors.username = "Username cannot be emty";
-    }
-    if (password === "") {
-      errors.password = "Password is required";
-    }
+    for (const detail of error.details)
+      errors[detail.context.key] = detail.message;
     return errors;
+  }
+
+  validateProperty({ name, value }) {
+    const subSchema = this.schema.extract(name);
+    const { error } = subSchema.validate(value);
+
+    if (!error) return null;
+
+    return error.message;
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
-    console.log(errors);
-    this.setState({ errors });
-    if (!_.isEmpty(errors)) return;
+    this.setState({ errors: errors || {} });
     console.log("Loggar in");
   };
 
   handleChange = ({ target: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
+
     const account = { ...this.state.account };
-    account[input.id] = input.value;
-    this.setState({ account });
+    account[input.name] = input.value;
+    this.setState({ account, errors });
   };
 
   render() {
@@ -58,7 +74,7 @@ class LoginForm extends Component {
           onChange={this.handleChange}
         />
 
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary">Logga in</button>
       </form>
     );
   }
