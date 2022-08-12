@@ -3,6 +3,7 @@ import _ from "lodash";
 import { getFoods } from "../fakeFoodService";
 import { getCategories } from "../fakeCategoryService";
 import { paginate } from "../utils/paginate";
+import { Link } from "react-router-dom";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
@@ -27,6 +28,12 @@ class Foods extends Component {
     const categories = [DEFAULT_CATEGORY, ...getCategories()];
     this.setState({ foods: getFoods(), categories });
   }
+
+  // link = {
+  //   handleNewFoodClick: () => {
+  //     `/intensive-foods/foods/`;
+  //   },
+  // };
 
   handleDelete = (food) => {
     // Deletes the item you click on
@@ -105,37 +112,47 @@ class Foods extends Component {
     const { foods, FilteredCount } = this.getPaginatedFoods();
 
     return count === 0 ? (
-      <p>There are no foods in the database</p>
-    ) : (
       <>
-        <div className="container mt-4">
-          <div className="row">
-            <div className="col-2">
-              <ListGroup
-                items={categories}
-                selectedItem={selectedCategori}
-                onListGroupClick={this.handleListGroupClick}
-              />
-            </div>
-            <div className="col-10">
-              <span>Showing {FilteredCount} foods in the database</span>
-              <FoodsTable
-                foods={foods}
-                onStarClick={this.handleStarClick}
-                onDelete={this.handleDelete}
-                onSort={this.handleSort}
-                sortColumn={sortColumn}
-              />
-              <Pagination
-                itemCount={FilteredCount}
-                pageSize={pageSize}
-                selectedPage={selectedPage}
-                onPageChange={this.handlePageChange}
-              />
-            </div>
+        <p>There are no foods in the database</p>
+        <button className="btn-primary">
+          <Link className="btn btn-primary" to="/intensive-foods/foods/new">
+            New Food
+          </Link>
+        </button>
+      </>
+    ) : (
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-2">
+            <ListGroup
+              items={categories}
+              selectedItem={selectedCategori}
+              onListGroupClick={this.handleListGroupClick}
+            />
+          </div>
+          <div className="col-10">
+            <button className="btn-primary">
+              <Link className="btn btn-primary" to="/intensive-foods/foods/new">
+                New Food
+              </Link>
+            </button>
+            <div>Showing {FilteredCount} foods in the database</div>
+            <FoodsTable
+              foods={foods}
+              onStarClick={this.handleStarClick}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+            />
+            <Pagination
+              itemCount={FilteredCount}
+              pageSize={pageSize}
+              selectedPage={selectedPage}
+              onPageChange={this.handlePageChange}
+            />
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

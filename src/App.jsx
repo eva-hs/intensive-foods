@@ -29,6 +29,7 @@ class App extends Component {
           <Route path="/intensive-foods/foods" component={Foods} />
           <Route path="/intensive-foods/customers" component={Customers} />
           <Route path="/intensive-foods/orders" component={Orders} />
+          <Route path="/intensive-fodds/foods/new" component={FoodForm} />
           <Route path="/intensive-foods/not-found" component={NotFound} />
           <Route exact path="/intensive-foods/" component={Foods} />
           <Redirect to="/intensive-foods/not-found" />
