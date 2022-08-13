@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Input from "./Input";
+import InputDropDown from "./InputDropDown";
 
 class Form extends Component {
   // Abstrakt component, har ingen render()
@@ -80,6 +81,21 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Input
+        type={name}
+        name={name}
+        label={label}
+        value={data[name]}
+        error={errors[name]}
+        onChange={this.handleChange}
+      />
+    );
+  }
+
+  renderInputDropDown(items, name, label) {
+    const { data, errors } = this.state;
+    return (
+      <InputDropDown
+        items={items}
         type={name}
         name={name}
         label={label}
