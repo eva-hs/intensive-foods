@@ -16,7 +16,11 @@ function InputDropDown({ items, name, label, value, onChange, error }) {
         <option value=""></option>
 
         {items.map((item) => {
-          return <option value={item._id}>{item.name}</option>;
+          return (
+            <option key={item._id} value={item._id}>
+              {item.name}
+            </option>
+          );
         })}
       </select>
 

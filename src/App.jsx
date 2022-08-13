@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <NavBar />;
+        <NavBar />
         {/* <Redirect from="/intensive-foods/" to="/intensive-foods/foods" /> */}
         <Switch>
           <Route path="/intensive-foods/foods/:id" component={FoodForm} />

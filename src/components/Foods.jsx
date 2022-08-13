@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { getFoods } from "../fakeFoodService";
+import { getFoods, deleteFood } from "../fakeFoodService";
 import { getCategories } from "../fakeCategoryService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
@@ -9,10 +9,6 @@ import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
-
-// Bugs
-// In a category. If all item in a category are deleted. It show an emty page.
-// In allCategories. If all items in one page are deleted. It shows an emty page.
 
 class Foods extends Component {
   state = {
@@ -29,18 +25,12 @@ class Foods extends Component {
     this.setState({ foods: getFoods(), categories });
   }
 
-  // link = {
-  //   handleNewFoodClick: () => {
-  //     `/intensive-foods/foods/`;
-  //   },
-  // };
-
+  // Deletes the item you click on Delete button.
+  //+ bug fixer - In filtered category and allCategories
+  // If all items in one category were deleted, it showed an emty page.
   handleDelete = (food) => {
-    // Deletes the item you click on
-    //+ bug fixer - In filtered category and allCategories
-    // If all items in one category were deleted, it showed an emty page.
-    const foods = this.state.foods.filter((f) => f._id !== food._id);
-    // Fixes bug when you have chosen a category and deletes all the items.
+    deleteFood(food._id);
+    const foods = getFoods();
     if (this.state.selectedCategori._id) {
       foods.filter(
         (food) => food.category._id === this.state.selectedCategori._id

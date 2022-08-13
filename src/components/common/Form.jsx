@@ -19,7 +19,6 @@ class Form extends Component {
   validate() {
     const options = { abortEarly: false };
     const { error } = this.schema.validate(this.state.data, options);
-
     if (!error) return null;
 
     const errors = {};
@@ -45,11 +44,13 @@ class Form extends Component {
   handleChange = ({ target: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
+
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
+
     this.setState({ data, errors });
   };
 
@@ -91,6 +92,7 @@ class Form extends Component {
     );
   }
 
+  // Hjälpfunktion så du enkelt kan rendera en dropdown-lista i formuläret.
   renderInputDropDown(items, name, label) {
     const { data, errors } = this.state;
     return (
