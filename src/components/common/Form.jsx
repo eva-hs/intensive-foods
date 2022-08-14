@@ -78,7 +78,10 @@ class Form extends Component {
   }
 
   // Hjälpfunktion så du enkelt kan rendera Input-rutorna i formuläret.
-  renderInput(name, label) {
+
+  // Jag har lagt till inBoxLabel - kolla om den ska vara i searchbox med
+
+  renderInput(name, label, inBoxLabel) {
     const { data, errors } = this.state;
     return (
       <Input
@@ -88,6 +91,7 @@ class Form extends Component {
         value={data[name]}
         error={errors[name]}
         onChange={this.handleChange}
+        inBoxLabel={inBoxLabel}
       />
     );
   }

@@ -1,6 +1,9 @@
 import React from "react";
 
-function Input({ name, label, value, onChange, error }) {
+// Jag har lagt till placeholder och inBoxLabel för de som vill ha
+// hjälptext i rutan
+
+function Input({ name, label, value, onChange, error, inBoxLabel }) {
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">
@@ -13,6 +16,7 @@ function Input({ name, label, value, onChange, error }) {
         className="form-control"
         id={name}
         name={name}
+        placeholder={inBoxLabel}
       />
       {error && <div className="alert alert-danger">{error}</div>}
     </div>

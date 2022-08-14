@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
+import SearchBoxForm from "./common/SearchBoxForm";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
 
 class Foods extends Component {
   state = {
     foods: [],
+    searchedFoods: [],
     categories: [],
     pageSize: 4,
     selectedPage: 1,
@@ -93,13 +95,41 @@ class Foods extends Component {
     return { foods, FilteredCount: filteredFoods.length };
   }
 
+  // Jag har fått själva sökfunktionen till att fungera.
+  // Men jag lyckas inte koppla den till foodsarrayen på sidan
+  handleSearchBox(searchdata) {
+    const allFoods = getFoods();
+    if (searchdata) {
+      const foods = [];
+      for (const food of allFoods) {
+        const foodName = food.name.toLowerCase();
+        const searchData = searchdata.toLowerCase();
+        if (foodName.startsWith(searchData) === true) {
+          foods.push(food);
+        }
+      }
+      console.log(foods);
+      return { foods, FilteredCount: foods.length };
+    } else {
+      // const foods = allFoods;
+      // return { foods, FilteredCount: foods.length };
+      this.getPaginatedFoods();
+    }
+  }
+
   render() {
     const { pageSize, selectedPage, selectedCategori, categories, sortColumn } =
       this.state;
 
     const { length: count } = this.state.foods;
 
-    const { foods, FilteredCount } = this.getPaginatedFoods();
+    //const { foods, FilteredCount } = this.getPaginatedFoods();
+
+    // Tanken är att skapa foods från handleSearchBox om den är truthy,
+    // annars getPaginatedFood - men handleSearchBox blir hela tiden falsy
+    const { foods, FilteredCount } =
+      this.handleSearchBox() || this.getPaginatedFoods();
+    console.log(foods);
 
     return count === 0 ? (
       <>
@@ -127,6 +157,7 @@ class Foods extends Component {
               </Link>
             </button>
             <div>Showing {FilteredCount} foods in the database</div>
+            <SearchBoxForm onSearch={this.handleSearchBox} />
             <FoodsTable
               foods={foods}
               onStarClick={this.handleStarClick}

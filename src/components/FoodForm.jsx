@@ -53,6 +53,8 @@ class FoodForm extends Form {
       När vi kopplar mot en databas så kommer en ny food att vara kvar även
       efter att sidan läses in igen. Så denna bug är endast i koden så länge
       inte inte har koppla mot en databas.
+
+      Detta fungerar i github :)
       */
 
       if (data === undefined) {
