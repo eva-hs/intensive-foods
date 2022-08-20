@@ -3,14 +3,14 @@ import React from "react";
 // Jag har lagt till placeholder och inBoxLabel för de som vill ha
 // hjälptext i rutan
 
-function Input({ name, label, value, onChange, error, inBoxLabel }) {
+function Input({ name, label, value, type, onChange, error, inBoxLabel }) {
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">
         {label}
       </label>
       <input
-        type={name === "password" ? "password" : ""}
+        type={type}
         onChange={onChange}
         value={value}
         className="form-control"

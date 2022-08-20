@@ -14,7 +14,7 @@ class SearchBoxForm extends Form {
   };
 
   schema = Joi.object({
-    searchData: Joi.string().empty("").label("SearchData"),
+    searchData: Joi.string().allow("").label("SearchData"),
   });
 
   // Vad ska hända när man tycker på knappen?

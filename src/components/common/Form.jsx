@@ -81,11 +81,11 @@ class Form extends Component {
 
   // Jag har lagt till inBoxLabel - kolla om den ska vara i searchbox med
 
-  renderInput(name, label, inBoxLabel) {
+  renderInput(name, label, inBoxLabel, type = "text") {
     const { data, errors } = this.state;
     return (
       <Input
-        type={name}
+        type={type}
         name={name}
         label={label}
         value={data[name]}

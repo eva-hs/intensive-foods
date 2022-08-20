@@ -27,7 +27,7 @@ class Foods extends Component {
     this.setState({ foods: getFoods(), categories });
   }
 
-  // Deletes the item you click on Delete button.
+  // Deletes the item when you click on its Delete button.
   //+ bug fixer - In filtered category and allCategories
   // If all items in one category were deleted, it showed an emty page.
   handleDelete = (food) => {
@@ -123,24 +123,15 @@ class Foods extends Component {
 
     const { length: count } = this.state.foods;
 
-    //const { foods, FilteredCount } = this.getPaginatedFoods();
+    const { foods, FilteredCount } = this.getPaginatedFoods();
 
     // Tanken är att skapa foods från handleSearchBox om den är truthy,
     // annars getPaginatedFood - men handleSearchBox blir hela tiden falsy
-    const { foods, FilteredCount } =
-      this.handleSearchBox() || this.getPaginatedFoods();
-    console.log(foods);
+    // const { foods, FilteredCount } =
+    //   this.handleSearchBox() || this.getPaginatedFoods();
+    // console.log(foods);
 
-    return count === 0 ? (
-      <>
-        <p>There are no foods in the database</p>
-        <button className="btn-primary">
-          <Link className="btn btn-primary" to="/intensive-foods/foods/new">
-            New Food
-          </Link>
-        </button>
-      </>
-    ) : (
+    return (
       <div className="container mt-4">
         <div className="row">
           <div className="col-2">
@@ -156,21 +147,28 @@ class Foods extends Component {
                 New Food
               </Link>
             </button>
-            <div>Showing {FilteredCount} foods in the database</div>
-            <SearchBoxForm onSearch={this.handleSearchBox} />
-            <FoodsTable
-              foods={foods}
-              onStarClick={this.handleStarClick}
-              onDelete={this.handleDelete}
-              onSort={this.handleSort}
-              sortColumn={sortColumn}
-            />
-            <Pagination
-              itemCount={FilteredCount}
-              pageSize={pageSize}
-              selectedPage={selectedPage}
-              onPageChange={this.handlePageChange}
-            />
+            {count === 0 ? (
+              <p>There are no foods in the database</p>
+            ) : (
+              <>
+                <p>Showing {FilteredCount} foods in the database</p>
+
+                <SearchBoxForm onSearch={this.handleSearchBox} />
+                <FoodsTable
+                  foods={foods}
+                  onStarClick={this.handleStarClick}
+                  onDelete={this.handleDelete}
+                  onSort={this.handleSort}
+                  sortColumn={sortColumn}
+                />
+                <Pagination
+                  itemCount={FilteredCount}
+                  pageSize={pageSize}
+                  selectedPage={selectedPage}
+                  onPageChange={this.handlePageChange}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -8,33 +8,25 @@ function NavBar() {
         <NavLink className="navbar-brand" to="/intensive-foods/">
           Intensive foods
         </NavLink>
-        <ul className="navbar-nav me-auto">
-          <li className="nav-item">
+        <div className="collapse navbar-collapse" id="navbarNavAltMArkup">
+          <div className="navbar-nav">
             <NavLink className="nav-link" to="/intensive-foods/foods">
               Foods
             </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="/intensive-foods/customers">
               Customers
             </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="/intensive-foods/orders">
               Orders
             </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="/intensive-foods/login">
               Login
             </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="/intensive-foods/register">
               Register
             </NavLink>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </nav>
   );

@@ -80,7 +80,7 @@ class FoodForm extends Form {
 
   schema = Joi.object({
     name: Joi.string().required().label("Name"),
-    category: Joi.object().empty({}).label("Category"),
+    category: Joi.object().allow({}).label("Category"),
     categoryId: Joi.string().required().label("Category"),
     numberInStock: Joi.number()
       .required()
@@ -88,7 +88,7 @@ class FoodForm extends Form {
       .max(100)
       .label("Number in stock"),
     price: Joi.number().required().min(0).max(10).label("Price"),
-    _id: Joi.any().empty("").label("_id"),
+    _id: Joi.any().allow("").label("_id"),
   });
 
   doSubmit = () => {
