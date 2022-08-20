@@ -1,6 +1,14 @@
 import React from "react";
 
-function InputDropDown({ items, name, label, value, onChange, error }) {
+function InputDropDown({
+  options,
+  name,
+  label,
+  value,
+  onChange,
+  error,
+  placeholder,
+}) {
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">
@@ -13,9 +21,9 @@ function InputDropDown({ items, name, label, value, onChange, error }) {
         id={name}
         name={name}
       >
-        <option value=""></option>
+        <option value={placeholder}></option>
 
-        {items.map((item) => {
+        {options.map((item) => {
           return (
             <option key={item._id} value={item._id}>
               {item.name}

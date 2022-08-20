@@ -14,7 +14,7 @@ const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
 class Foods extends Component {
   state = {
     foods: [],
-    searchedFoods: [],
+    searchQuery: "",
     categories: [],
     pageSize: 4,
     selectedPage: 1,
@@ -56,6 +56,18 @@ class Foods extends Component {
 
   handleSort = (sortColumn) => this.setState({ sortColumn });
 
+  handlePageChange = (page) => this.setState({ selectedPage: page });
+
+  handleListGroupClick = (category) =>
+    this.setState({
+      selectedCategori: category,
+      selectedPage: 1,
+      searchQuery: "",
+    });
+
+  handleSearch = (searchQuery) =>
+    this.setState({ searchQuery, selectedCategori: DEFAULT_CATEGORY });
+
   handleStarClick = (food) => {
     const foods = [...this.state.foods];
     const index = foods.indexOf(food);
@@ -64,23 +76,28 @@ class Foods extends Component {
     this.setState({ foods });
   };
 
-  handlePageChange = (page) => this.setState({ selectedPage: page });
-
-  handleListGroupClick = (category) =>
-    this.setState({ selectedCategori: category, selectedPage: 1 });
-
   getPaginatedFoods() {
     const {
       pageSize,
       selectedPage,
       selectedCategori,
+      searchQuery,
       foods: allFoods,
       sortColumn,
     } = this.state;
-    // 1. Filter
-    const filteredFoods = selectedCategori._id
-      ? allFoods.filter((f) => f.category._id === selectedCategori._id)
-      : allFoods;
+
+    // 1. Filter (Either through category or seachQuery)
+    let filteredFoods = allFoods;
+
+    if (selectedCategori._id) {
+      filteredFoods = allFoods.filter(
+        (f) => f.category._id === selectedCategori._id
+      );
+    } else if (searchQuery) {
+      filteredFoods = allFoods.filter((f) =>
+        f.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
     // 2. Sort
     const sortedFoods = _.orderBy(
@@ -95,41 +112,19 @@ class Foods extends Component {
     return { foods, FilteredCount: filteredFoods.length };
   }
 
-  // Jag har fått själva sökfunktionen till att fungera.
-  // Men jag lyckas inte koppla den till foodsarrayen på sidan
-  handleSearchBox(searchdata) {
-    const allFoods = getFoods();
-    if (searchdata) {
-      const foods = [];
-      for (const food of allFoods) {
-        const foodName = food.name.toLowerCase();
-        const searchData = searchdata.toLowerCase();
-        if (foodName.startsWith(searchData) === true) {
-          foods.push(food);
-        }
-      }
-      console.log(foods);
-      return { foods, FilteredCount: foods.length };
-    } else {
-      // const foods = allFoods;
-      // return { foods, FilteredCount: foods.length };
-      this.getPaginatedFoods();
-    }
-  }
-
   render() {
-    const { pageSize, selectedPage, selectedCategori, categories, sortColumn } =
-      this.state;
+    const {
+      pageSize,
+      selectedPage,
+      selectedCategori,
+      categories,
+      sortColumn,
+      searchQuery,
+    } = this.state;
 
     const { length: count } = this.state.foods;
 
     const { foods, FilteredCount } = this.getPaginatedFoods();
-
-    // Tanken är att skapa foods från handleSearchBox om den är truthy,
-    // annars getPaginatedFood - men handleSearchBox blir hela tiden falsy
-    // const { foods, FilteredCount } =
-    //   this.handleSearchBox() || this.getPaginatedFoods();
-    // console.log(foods);
 
     return (
       <div className="container mt-4">
@@ -153,7 +148,10 @@ class Foods extends Component {
               <>
                 <p>Showing {FilteredCount} foods in the database</p>
 
-                <SearchBoxForm onSearch={this.handleSearchBox} />
+                <SearchBoxForm
+                  value={searchQuery}
+                  onChange={this.handleSearch}
+                />
                 <FoodsTable
                   foods={foods}
                   onStarClick={this.handleStarClick}

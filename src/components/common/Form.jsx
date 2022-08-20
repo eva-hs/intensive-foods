@@ -24,6 +24,7 @@ class Form extends Component {
     const errors = {};
     for (const detail of error.details)
       errors[detail.context.key] = detail.message;
+
     return errors;
   }
 
@@ -56,12 +57,13 @@ class Form extends Component {
 
   // Förhindrar defaultflödet, att ladda om sidan helt.
   // Om validate() hittar fel så sparas dessa i errors. Statet uppdateras med
-  //errors eller ett tomt objekt då det inte får vara null eller undefined.
+  // errors eller ett tomt objekt då det inte får vara null eller undefined.
   handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
     this.setState({ errors: errors || {} });
+
     if (errors) return;
 
     this.doSubmit();
@@ -97,15 +99,16 @@ class Form extends Component {
   }
 
   // Hjälpfunktion så du enkelt kan rendera en dropdown-lista i formuläret.
-  renderInputDropDown(items, name, label) {
+  renderInputDropDown(options, name, label, placeholder) {
     const { data, errors } = this.state;
     return (
       <InputDropDown
-        items={items}
+        options={options}
         type={name}
         name={name}
         label={label}
         value={data[name]}
+        placeholder={placeholder}
         error={errors[name]}
         onChange={this.handleChange}
       />
