@@ -1,7 +1,8 @@
 import React from "react";
 import Joi from "joi";
-import axios from "axios";
+import http from "./services/httpService";
 import Form from "./common/Form";
+import config from "../config.json";
 
 class FoodForm extends Form {
   state = {
@@ -18,11 +19,16 @@ class FoodForm extends Form {
 
   async componentDidMount() {
     // Is used for content in the dropdown-list.
-    const { data: categories } = await axios.get(
-      "http://localhost:8000/api/categories"
-    );
-
-    this.setState({ categories });
+    try {
+      const { data: categories } = await http.get(config.apiEndpointCategories);
+      this.setState({ categories });
+    } catch (error) {
+      console.log(
+        "cdm, get categories, catch in foodForm.jsx: ",
+        error.message
+      );
+      alert("Something went wrong");
+    }
 
     const id = this.props.match.params.id;
 
@@ -30,7 +36,7 @@ class FoodForm extends Form {
     if (id === "new") return;
 
     // when id is other than new, a form filled with the food will open.
-    const { data } = await axios.get(`http://localhost:8000/api/foods/${id}`);
+    const { data } = await http.get(`${config.apiEndpointFoods}/${id}`);
 
     if (!data) return this.props.history.replace("/intensive-foods/not-found");
 
@@ -77,9 +83,9 @@ class FoodForm extends Form {
 
     // Either creates or updatades a new food in mongodb.
     if (!id) {
-      await axios.post("http://localhost:8000/api/foods", food);
+      await http.post(config.apiEndpointFoods, food);
     } else {
-      await axios.put(`http://localhost:8000/api/foods/${id}`, food);
+      await http.put(`${config.apiEndpointFoods}/${id}`, food);
     }
 
     // Sends you back to the foodtable and the table updates in foods cdm.

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import axios from "axios";
+import http from "./services/httpService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
 import SearchBoxForm from "./common/SearchBoxForm";
+import config from "../config.json";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
 
@@ -26,26 +27,22 @@ class Foods extends Component {
   async componentDidMount() {
     try {
       // act. result.data = categories
-      let { data: categories } = await axios.get(
-        "http://localhost:8000/api/categories"
-      );
+      let { data: categories } = await http.get(config.apiEndpointCategories);
 
       categories = [DEFAULT_CATEGORY, ...categories];
 
-      const { data: foods } = await axios.get(
-        "http://localhost:8000/api/foods"
-      );
+      const { data: foods } = await http.get(config.apiEndpointFoods);
 
       this.setState({ foods, categories });
     } catch (error) {
-      console.log("cdm catch in foods.jsx: ", error);
+      console.log("cdm catch in foods.jsx: ", error.message);
+      alert("Something went wrong");
     }
   }
 
   // Deletes the item when you click on its Delete button.
   handleDelete = async (food) => {
-    // Deletes food from mongodb, backend
-    await axios.delete(`http://localhost:8000/api/foods/${food._id}`);
+    const originalFoods = this.state.foods;
 
     // Filters existing foods array to delete food from state, frontend
     const foods = this.state.foods.filter((f) => f._id !== food._id);
@@ -69,6 +66,17 @@ class Foods extends Component {
       this.setState({ foods, selectedPage: this.state.selectedPage - 1 });
     } else {
       this.setState({ foods });
+    }
+
+    // Deletes food from mongodb, backend
+    try {
+      await http.delete(`${config.apiEndpointFoods}/${food._id}`);
+    } catch (error) {
+      // No known error messages because front end only has a button.
+      console.log("handleDelete in Foods.jsx: ", error.message);
+      alert("Something went wrong");
+
+      this.setState({ foods: originalFoods });
     }
   };
 
