@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import http from "./services/httpService";
+import http from "../services/httpService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";

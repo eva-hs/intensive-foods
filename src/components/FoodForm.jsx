@@ -1,6 +1,6 @@
 import React from "react";
 import Joi from "joi";
-import http from "./services/httpService";
+import http from "../services/httpService";
 import Form from "./common/Form";
 import config from "../config.json";
 import { toast } from "react-toastify";
