@@ -1,8 +1,7 @@
 import React from "react";
 import Joi from "joi";
+import axios from "axios";
 import Form from "./common/Form";
-import { saveFood, getFood } from "../fakeFoodService";
-import { getCategories } from "../fakeCategoryService";
 
 class FoodForm extends Form {
   state = {
@@ -17,9 +16,12 @@ class FoodForm extends Form {
     categories: [],
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // Is used for content in the dropdown-list.
-    const categories = getCategories();
+    const { data: categories } = await axios.get(
+      "http://localhost:8000/api/categories"
+    );
+
     this.setState({ categories });
 
     const id = this.props.match.params.id;
@@ -28,7 +30,8 @@ class FoodForm extends Form {
     if (id === "new") return;
 
     // when id is other than new, a form filled with the food will open.
-    const data = getFood(id);
+    const { data } = await axios.get(`http://localhost:8000/api/foods/${id}`);
+
     if (!data) return this.props.history.replace("/intensive-foods/not-found");
 
     this.setState({ data: this.mapToViewModel(data) });
@@ -44,6 +47,15 @@ class FoodForm extends Form {
     };
   }
 
+  mapToDatabaseModel(data) {
+    return {
+      name: data.name,
+      categoryId: data.categoryId,
+      numberInStock: data.numberInStock,
+      price: data.price,
+    };
+  }
+
   schema = Joi.object({
     name: Joi.string().required().label("Name"),
     categoryId: Joi.string().required().label("Category"),
@@ -56,9 +68,21 @@ class FoodForm extends Form {
     _id: Joi.string().allow(""),
   });
 
-  doSubmit = () => {
-    saveFood(this.state.data);
+  // Either creates or updatades a new food in mongodb.
+  doSubmit = async () => {
+    const { _id: id } = this.state.data;
 
+    // Mongodb does not accept that we sends the _id in the food object.
+    const food = this.mapToDatabaseModel(this.state.data);
+
+    // Either creates or updatades a new food in mongodb.
+    if (!id) {
+      await axios.post("http://localhost:8000/api/foods", food);
+    } else {
+      await axios.put(`http://localhost:8000/api/foods/${id}`, food);
+    }
+
+    // Sends you back to the foodtable and the table updates in foods cdm.
     this.props.history.push("/intensive-foods/foods");
   };
 

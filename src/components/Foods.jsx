@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { getFoods, deleteFood } from "../fakeFoodService";
-import { getCategories } from "../fakeCategoryService";
+import axios from "axios";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import Pagination from "./common/Pagination";
@@ -22,17 +21,36 @@ class Foods extends Component {
     sortColumn: { path: "name", order: "asc" },
   };
 
-  componentDidMount() {
-    const categories = [DEFAULT_CATEGORY, ...getCategories()];
-    this.setState({ foods: getFoods(), categories });
+  // Downloads categories and foods from mongodb.
+  // Adds "all categories" to the category array.
+  async componentDidMount() {
+    try {
+      // act. result.data = categories
+      let { data: categories } = await axios.get(
+        "http://localhost:8000/api/categories"
+      );
+
+      categories = [DEFAULT_CATEGORY, ...categories];
+
+      const { data: foods } = await axios.get(
+        "http://localhost:8000/api/foods"
+      );
+
+      this.setState({ foods, categories });
+    } catch (error) {
+      console.log("cdm catch in foods.jsx: ", error);
+    }
   }
 
   // Deletes the item when you click on its Delete button.
-  //+ bug fixer - In filtered category and allCategories
-  // If all items in one category were deleted, it showed an emty page.
-  handleDelete = (food) => {
-    deleteFood(food._id);
-    const foods = getFoods();
+  handleDelete = async (food) => {
+    // Deletes food from mongodb, backend
+    await axios.delete(`http://localhost:8000/api/foods/${food._id}`);
+
+    // Filters existing foods array to delete food from state, frontend
+    const foods = this.state.foods.filter((f) => f._id !== food._id);
+
+    // fixes bug in selected category, when you delete the last item in a page.
     if (this.state.selectedCategori._id) {
       foods.filter(
         (food) => food.category._id === this.state.selectedCategori._id
@@ -58,15 +76,15 @@ class Foods extends Component {
 
   handlePageChange = (page) => this.setState({ selectedPage: page });
 
+  handleSearch = (searchQuery) =>
+    this.setState({ searchQuery, selectedCategori: DEFAULT_CATEGORY });
+
   handleListGroupClick = (category) =>
     this.setState({
       selectedCategori: category,
       selectedPage: 1,
       searchQuery: "",
     });
-
-  handleSearch = (searchQuery) =>
-    this.setState({ searchQuery, selectedCategori: DEFAULT_CATEGORY });
 
   handleStarClick = (food) => {
     const foods = [...this.state.foods];
