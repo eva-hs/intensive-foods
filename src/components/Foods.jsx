@@ -3,6 +3,8 @@ import _ from "lodash";
 import http from "./services/httpService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { log } from "../services/logService";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
@@ -36,7 +38,7 @@ class Foods extends Component {
       this.setState({ foods, categories });
     } catch (error) {
       console.log("cdm catch in foods.jsx: ", error.message);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   }
 
@@ -74,7 +76,8 @@ class Foods extends Component {
     } catch (error) {
       // No known error messages because front end only has a button.
       console.log("handleDelete in Foods.jsx: ", error.message);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
+      log(error);
 
       this.setState({ foods: originalFoods });
     }
@@ -154,6 +157,7 @@ class Foods extends Component {
 
     return (
       <div className="container mt-4">
+        <ToastContainer />
         <div className="row">
           <div className="col-2">
             <ListGroup

@@ -3,6 +3,7 @@ import Joi from "joi";
 import http from "./services/httpService";
 import Form from "./common/Form";
 import config from "../config.json";
+import { toast } from "react-toastify";
 
 class FoodForm extends Form {
   state = {
@@ -27,7 +28,7 @@ class FoodForm extends Form {
         "cdm, get categories, catch in foodForm.jsx: ",
         error.message
       );
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
 
     const id = this.props.match.params.id;
