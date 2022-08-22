@@ -18,7 +18,12 @@ class FoodForm extends Form {
     categories: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.populateCategories();
+    this.populateFood();
+  }
+
+  async populateCategories() {
     // Is used for content in the dropdown-list.
     try {
       const { data: categories } = await http.get(config.apiEndpointCategories);
@@ -30,7 +35,9 @@ class FoodForm extends Form {
       );
       toast.error("Something went wrong");
     }
+  }
 
+  async populateFood() {
     const id = this.props.match.params.id;
 
     // when id is new, an empty form will open.

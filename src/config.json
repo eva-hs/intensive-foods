@@ -1,5 +1,7 @@
 {
   "apiEndpointFoods": "http://localhost:8000/api/foods",
 
-  "apiEndpointCategories": "http://localhost:8000/api/categories"
+  "apiEndpointCategories": "http://localhost:8000/api/categories",
+
+  "apiEndpointUsers": "http://localhost:8000/api/users"
 }
