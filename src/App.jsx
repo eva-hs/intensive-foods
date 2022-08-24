@@ -10,6 +10,7 @@ import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
 import RegisterForm from "./components/RegisterForm";
 import NotFound from "./components/NotFound";
+import auth from "./services/authService";
 
 class App extends Component {
   state = {
@@ -18,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     try {
-      const token = localStorage.getItem(`token`);
+      const token = auth.getJwt();
       const user = jwtDecode(token);
       this.setState({ user });
     } catch (error) {}

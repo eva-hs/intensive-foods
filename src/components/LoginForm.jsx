@@ -25,8 +25,7 @@ class LoginForm extends Form {
   // Vad ska hända när man tycker på knappen?
   doSubmit = async () => {
     try {
-      const { data: jwt } = await auth.login(this.state.data);
-      localStorage.setItem("token", jwt);
+      await auth.login(this.state.data);
       window.location = "/intensive-foods/";
     } catch (error) {
       if (error.response.status === 400) {

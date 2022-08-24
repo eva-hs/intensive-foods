@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import http from "../services/httpService";
+import foodService from "../services/foodService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -9,7 +9,6 @@ import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import FoodsTable from "./FoodsTable";
 import SearchBoxForm from "./common/SearchBoxForm";
-import config from "../config.json";
 
 const DEFAULT_CATEGORY = { _id: "", name: "All categories" };
 
@@ -29,11 +28,11 @@ class Foods extends Component {
   async componentDidMount() {
     try {
       // act. result.data = categories
-      let { data: categories } = await http.get(config.apiEndpointCategories);
+      let { data: categories } = await foodService.getCategories();
 
       categories = [DEFAULT_CATEGORY, ...categories];
 
-      const { data: foods } = await http.get(config.apiEndpointFoods);
+      const { data: foods } = await foodService.getFoods();
 
       this.setState({ foods, categories });
     } catch (error) {
@@ -72,7 +71,7 @@ class Foods extends Component {
 
     // Deletes food from mongodb, backend
     try {
-      await http.delete(`${config.apiEndpointFoods}/${food._id}`);
+      await foodService.deleteFood(food);
     } catch (error) {
       // No known error messages because front end only has a button.
       console.log("handleDelete in Foods.jsx: ", error.message);
