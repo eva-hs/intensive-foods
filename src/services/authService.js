@@ -1,7 +1,10 @@
+import jwtDecode from "jwt-decode";
 import httpService from "../services/httpService";
 import config from "../config.json";
 
 const TOKEN_KEY = "token";
+
+httpService.setAuthHeader(getJwt());
 
 async function login(user) {
   const data = {
@@ -24,11 +27,22 @@ function getJwt() {
   return localStorage.getItem(TOKEN_KEY);
 }
 
+function getCurrentUser() {
+  try {
+    const token = getJwt();
+    const user = jwtDecode(token);
+    return user;
+  } catch (error) {
+    return null;
+  }
+}
+
 const auth = {
   login,
   loginWithJwt,
   logout,
   getJwt,
+  getCurrentUser,
 };
 
 export default auth;

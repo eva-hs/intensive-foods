@@ -154,6 +154,8 @@ class Foods extends Component {
 
     const { foods, FilteredCount } = this.getPaginatedFoods();
 
+    console.log("2", this.props.user);
+
     return (
       <div className="container mt-4">
         <ToastContainer />
@@ -166,11 +168,16 @@ class Foods extends Component {
             />
           </div>
           <div className="col-10">
-            <button className="btn-primary">
-              <Link className="btn btn-primary" to="/intensive-foods/foods/new">
-                New Food
-              </Link>
-            </button>
+            {this.props.user && (
+              <button className="btn-primary">
+                <Link
+                  className="btn btn-primary"
+                  to="/intensive-foods/foods/new"
+                >
+                  New Food
+                </Link>
+              </button>
+            )}
             {count === 0 ? (
               <p>There are no foods in the database</p>
             ) : (
