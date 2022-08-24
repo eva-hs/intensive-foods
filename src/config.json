@@ -3,5 +3,7 @@
 
   "apiEndpointCategories": "http://localhost:8000/api/categories",
 
-  "apiEndpointUsers": "http://localhost:8000/api/users"
+  "apiEndpointUsers": "http://localhost:8000/api/users",
+
+  "apiEndpointAuth": "http://localhost:8000/api/auth"
 }

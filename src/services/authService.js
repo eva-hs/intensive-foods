@@ -1,17 +1,16 @@
 import httpService from "../services/httpService";
 import config from "../config.json";
 
-function register(user) {
+function login(user) {
   const data = {
-    name: user.name,
     email: user.username,
     password: user.password,
   };
-  return httpService.post(config.apiEndpointUsers, data);
+  return httpService.post(config.apiEndpointAuth, data);
 }
 
-const user = {
-  register,
+const auth = {
+  login,
 };
 
-export default user;
+export default auth;

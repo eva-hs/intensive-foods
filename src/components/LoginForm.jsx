@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi";
 import Form from "./common/Form";
+import auth from "../services/authService";
 
 // Ärver från Form.jsx.
 // Nytt formulär behöver state med data och errors, Joi-schema och doSubmit.
@@ -22,9 +23,19 @@ class LoginForm extends Form {
   });
 
   // Vad ska hända när man tycker på knappen?
-  doSubmit = () => {
-    console.log("Logga in");
+  doSubmit = async () => {
+    try {
+      const { data: jwt } = await auth.login(this.state.data);
+      localStorage.setItem("token", jwt);
+      window.location = "/intensive-foods/";
+    } catch (error) {
+      if (error.response.status === 400) {
+        const errors = { username: error.response.data };
+        this.setState({ errors });
+      }
+    }
   };
+
   render() {
     return (
       <form className="m-3" onSubmit={this.handleSubmit}>
