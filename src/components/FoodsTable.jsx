@@ -26,14 +26,16 @@ class FoodsTable extends Component {
     },
     {
       key: "delete",
-      content: (food) => (
-        <button
-          className="btn btn-danger"
-          onClick={() => this.props.onDelete(food)}
-        >
-          Delete
-        </button>
-      ),
+      content: (food) =>
+        this.props.user &&
+        this.props.user.isAdmin && (
+          <button
+            className="btn btn-danger"
+            onClick={() => this.props.onDelete(food)}
+          >
+            Delete
+          </button>
+        ),
     },
   ];
 

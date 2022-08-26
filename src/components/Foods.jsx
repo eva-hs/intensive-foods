@@ -72,7 +72,7 @@ class Foods extends Component {
 
     // Deletes food from mongodb, backend
     try {
-      await deleteFood(food);
+      deleteFood(food);
     } catch (error) {
       // No known error messages because front end only has a button.
       console.log("handleDelete in Foods.jsx: ", error.message);
@@ -193,6 +193,7 @@ class Foods extends Component {
                   onDelete={this.handleDelete}
                   onSort={this.handleSort}
                   sortColumn={sortColumn}
+                  user={this.props.user}
                 />
                 <Pagination
                   itemCount={FilteredCount}
