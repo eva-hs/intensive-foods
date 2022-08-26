@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import NavBar from "./components/common/NavBar";
+import NavBar from "./components/NavBar";
 import Customers from "./components/Customers";
 import Orders from "./components/Orders";
 import Foods from "./components/Foods";
