@@ -2,6 +2,7 @@ import React from "react";
 import Joi from "joi";
 import Form from "./common/Form";
 import auth from "../services/authService";
+import { Redirect } from "react-router-dom";
 
 // Ärver från Form.jsx.
 // Nytt formulär behöver state med data och errors, Joi-schema och doSubmit.
@@ -26,7 +27,8 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       await auth.login(this.state.data);
-      window.location = "/intensive-foods/";
+      const { state } = this.props.location;
+      window.location = state ? state.from : "/intensive-foods/";
     } catch (error) {
       if (error.response.status === 400) {
         const errors = { username: error.response.data };
@@ -36,6 +38,8 @@ class LoginForm extends Form {
   };
 
   render() {
+    if (auth.getCurrentUser()) return <Redirect to="/intensive-foods/" />;
+
     return (
       <form className="m-3" onSubmit={this.handleSubmit}>
         <h1>Log in</h1>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import foodService from "../services/foodService";
+import { getFoods, deleteFood } from "../services/foodService";
+import { getCategories } from "../services/categoryService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -28,11 +29,11 @@ class Foods extends Component {
   async componentDidMount() {
     try {
       // act. result.data = categories
-      let { data: categories } = await foodService.getCategories();
+      let { data: categories } = await getCategories();
 
       categories = [DEFAULT_CATEGORY, ...categories];
 
-      const { data: foods } = await foodService.getFoods();
+      const { data: foods } = await getFoods();
 
       this.setState({ foods, categories });
     } catch (error) {
@@ -71,7 +72,7 @@ class Foods extends Component {
 
     // Deletes food from mongodb, backend
     try {
-      await foodService.deleteFood(food);
+      await deleteFood(food);
     } catch (error) {
       // No known error messages because front end only has a button.
       console.log("handleDelete in Foods.jsx: ", error.message);
@@ -153,8 +154,6 @@ class Foods extends Component {
     const { length: count } = this.state.foods;
 
     const { foods, FilteredCount } = this.getPaginatedFoods();
-
-    console.log("2", this.props.user);
 
     return (
       <div className="container mt-4">

@@ -23,13 +23,13 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-    console.log("1", user);
+
     return (
       <>
         <NavBar user={user} />
         <Switch>
           <ProtectedRoute
-            path="/intensive-fodds/foods/:id"
+            path="/intensive-foods/foods/:id"
             component={FoodForm}
           />
           <Route path="/intensive-foods/login" component={LoginForm} />
@@ -41,9 +41,12 @@ class App extends Component {
           />
           <Route path="/intensive-foods/customers" component={Customers} />
           <Route path="/intensive-foods/orders" component={Orders} />
-          <Route path="/intensive-fodds/foods/new" component={FoodForm} />
           <Route path="/intensive-foods/not-found" component={NotFound} />
-          <Route exact path="/intensive-foods/" component={Foods} />
+          <Redirect
+            exact
+            from="/intensive-foods/"
+            to="/intensive-foods/foods"
+          />
           <Redirect to="/intensive-foods/not-found" />
         </Switch>
       </>
